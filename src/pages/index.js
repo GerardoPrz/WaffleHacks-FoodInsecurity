@@ -137,6 +137,9 @@ export default function Home({ categorizedFood }) {
       })
   }
 
+  const isRecipeGenerationDisabled =
+    isGeneratingRecipe || selectedFood.length === 0
+
   const handleSelectFoodTime = (foodTime) => {
     console.log({ foodTime })
     setSelectedFoodTime(foodTime)
@@ -151,16 +154,32 @@ export default function Home({ categorizedFood }) {
             Disfruta de comidas personalizadas con ingredientes en casa.
             Selecciónalos, elige el tipo y deléitate.
           </Text>
+
+          <p
+            className={`text-xs ${
+              selectedFood.length > 0 ? "text-primary" : "text-secondary"
+            }`}
+          >
+            <b>{`${selectedFood.length} `}</b>
+            alimentos seleccionados.
+          </p>
         </SectionHeader>
 
         <button
           onClick={() => generateRecipe(selectedFood)}
-          className={`flex items-center justify-center mx-auto hover:rotate-12 transition-all ${
-            isGeneratingRecipe ? "text-secondary/50" : "text-primary"
+          className={`flex flex-col gap-1 items-center justify-center mx-auto  ${
+            isRecipeGenerationDisabled ? "text-secondary/50" : "text-primary"
           }`}
-          disabled={isGeneratingRecipe}
+          disabled={isRecipeGenerationDisabled}
         >
-          <FoodGeneratorIcon size={96} />
+          <div
+            className={`transition-all ${
+              !isRecipeGenerationDisabled && "hover:rotate-12"
+            }`}
+          >
+            <FoodGeneratorIcon size={96} />
+          </div>
+          <span className="text-sm font-semibold">Generar</span>
         </button>
 
         <Tabs>
