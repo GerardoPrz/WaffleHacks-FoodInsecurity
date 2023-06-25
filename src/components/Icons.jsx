@@ -41,7 +41,7 @@ export function HomeIcon({ size }) {
 export function MenuIcon({ size }) {
   return (
     <svg
-    {...getIconSizeProps(size)}
+      {...getIconSizeProps(size)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
     >
@@ -147,6 +147,33 @@ export function FoodGeneratorIcon({ size }) {
         fill="currentColor"
         d="M49.46 21.237c.273.329.25.81-.052 1.112l-2.944 2.93a2 2 0 0 1-2.948-.14l-2.657-3.194a.824.824 0 1 1 1.267-1.054l1.505 1.808a2 2 0 0 0 2.947.14l1.667-1.66a.824.824 0 0 1 1.215.058ZM29.763 49.491a.836.836 0 0 1-1.115-.016l-3.108-2.863a2 2 0 0 1 .043-2.98l3.188-2.773a.836.836 0 0 1 1.097 1.261l-1.78 1.548a2 2 0 0 0-.042 2.98l1.734 1.598a.836.836 0 0 1-.017 1.245ZM.869 30.272a.824.824 0 0 1-.07-1.111l2.608-3.235a2 2 0 0 1 2.945-.185l2.99 2.882a.824.824 0 0 1-1.145 1.188l-1.693-1.633a2 2 0 0 0-2.945.186l-1.476 1.831a.824.824 0 0 1-1.214.077ZM20.754.873a.825.825 0 0 1 1.116-.07l3.228 2.627a2 2 0 0 1 .18 2.935l-2.88 3.006a.825.825 0 1 1-1.19-1.14l1.642-1.715a2 2 0 0 0-.18-2.935l-1.842-1.498a.825.825 0 0 1-.074-1.21Z"
       />
+    </svg>
+  )
+}
+
+export function BurgerMenuIcon({ size }) {
+  return (
+    <svg
+      {...getIconSizeProps(size)}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <mask
+        id="mask0_27_49"
+        maskUnits="userSpaceOnUse"
+        x="0"
+        y="0"
+        {...getIconSizeProps(size)}
+      >
+        <rect {...getIconSizeProps(size)} fill="#D9D9D9" />
+      </mask>
+      <g mask="url(#mask0_27_49)">
+        <path
+          d="M3 18V16H21V18H3ZM3 13V11H21V13H3ZM3 8V6H21V8H3Z"
+          fill="currentColor"
+        />
+      </g>
     </svg>
   )
 }
