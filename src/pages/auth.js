@@ -1,7 +1,6 @@
-import LoginForm from "./auth/loginForm";
-import RegisterForm from "./auth/registerForm";
-import RecoverPasswordForm from "./auth/recoverPassword";
-
+import LoginForm from "./auth/login";
+import RegisterForm from "./auth/register";
+import RecoverPasswordForm from "./auth/recover-password";
 export default function AuthPage() {
   return (
     <div>
