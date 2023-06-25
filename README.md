@@ -1,4 +1,9 @@
 ## Food insecurity
+## Team members
+-Flores Rodriguez Francisco Jacob
+-Huerta Pérez Raúl Gerardo
+-López Garduño Aura
+-Sustaita Cesar
 ## Figma
 https://www.figma.com/file/rMtbBlgfmWpBIcp2x4LduD/Food-Insecurity?type=design&node-id=0%3A1&mode=design&t=64XJj6VTg8zOAaU8-1
 
