@@ -1,3 +1,4 @@
+import { FOOD_TYPES } from "@/constants"
 import Image from "next/image"
 
 const FOOD_CARD_PROPS = {
@@ -13,13 +14,15 @@ export function FoodCard({
   isSelected,
   size = FOOD_CARD_PROPS.md.id,
   addShadow = false,
+  addClassificationColors = false,
 }) {
   const { size: cardSize, iconSize } = FOOD_CARD_PROPS[size]
-  const { name, icon: foodIcon } = food
+  const { name, icon: foodIcon, classification } = food
+  const { color } = FOOD_TYPES[classification] ?? {}
 
   const classes = [
-    "cursor-pointer flex flex-col gap-2 p-3 rounded-lg border-2 justify-center items-center aspect-square",
-    isSelected ? "border-primary" : "border-text/10",
+    "cursor-pointer flex flex-col gap-2 p-3 rounded-lg border-2 justify-center items-center aspect-square h-full",
+    isSelected ? "" : "border-text/10",
     addShadow ? "drop-shadow-2xl" : "",
     cardSize,
   ].join(" ")
@@ -33,9 +36,20 @@ export function FoodCard({
   }
 
   return (
-    <article className={classes}>
+    <article
+      className={classes}
+      style={{
+        borderColor: (isSelected || addClassificationColors) && color,
+      }}
+    >
       <Image {...iconProps} alt={name} />
-      {size !== FOOD_CARD_PROPS.sm.id && <h3 className="text-text">{name}</h3>}
+      <h3
+        className={`text-text font-medium text-ellipsis overflow-hidden ${
+          size === FOOD_CARD_PROPS.sm.id ? "text-xs" : "text-base"
+        }`}
+      >
+        {name}
+      </h3>
     </article>
   )
 }
