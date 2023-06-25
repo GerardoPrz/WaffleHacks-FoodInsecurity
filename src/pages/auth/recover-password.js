@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { resetPassword } from './api/firebase';
+import { resetPassword } from '../api/firebase';
 
 export default function RecoverPasswordForm() {
   const [email, setEmail] = useState('');
