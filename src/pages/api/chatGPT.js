@@ -34,7 +34,7 @@ export const sendMessage = async (selectedFood, foodTime) => {
 
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer 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`,
+    Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
   }
 
   const data = {
