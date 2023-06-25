@@ -5,6 +5,9 @@ import { Subtitle, Title } from "./Title"
 import { Section, SectionHeader } from "./Section"
 import { FoodIconsList } from "./Food"
 import { FOOD_TIMES, FOOD_TYPES } from "@/constants"
+import { useQuery } from "react-query"
+import { getRecommendations } from "@/pages/api/firebase"
+import { LoadingScreen } from "./Loading"
 
 export function ModalHeader({ children }) {
   return (
@@ -66,7 +69,18 @@ export default function Modal({ isOpen, closeModal, children }) {
 }
 
 export function RecipeDetailsModal({ recipe, isOpen, closeModal, isLoading }) {
-  if (isLoading) return <p>Loading recipe...</p>
+  const { data: recommendation } = useQuery({
+    queryKey: ["recommendations"],
+    queryFn: getRecommendations,
+    select: (data) => {
+      const randomIndex = Math.floor(Math.random() * data.length)
+      return data[randomIndex]
+    },
+  })
+
+  if (isLoading) {
+    return <LoadingScreen recommendation={recommendation} />
+  }
 
   const { type, name, ingredients, instructions, foodList, description } =
     recipe ?? {}
