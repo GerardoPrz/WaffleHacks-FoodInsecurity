@@ -1,6 +1,7 @@
 export * from "./Cards"
 export * from "./Header"
 export * from "./Layout"
+export * from "./Navbar"
 export * from "./Section"
 export * from "./Tabs"
 export * from "./Text"

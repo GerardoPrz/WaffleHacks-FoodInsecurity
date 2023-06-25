@@ -17,7 +17,7 @@ import {
   getDoc,
   getDocs,
   collection,
-} from "firebase/firestore";
+} from "firebase/firestore"
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2ps1m1koNXDLcElKtg0LN-bl3KvWNlLo",
@@ -99,9 +99,9 @@ export const addUserRecipe = async (recipe) => {
     const userDocRef = doc(db, "users", userId)
     await updateDoc(userDocRef, {
       recipes: arrayUnion(recipeId),
-    });
+    })
 
-    return recipeId;
+    return recipeId
   } catch (error) {
     throw new Error(error)
   }
@@ -120,9 +120,9 @@ export const addUserMenu = async (menu) => {
     const userDocRef = doc(db, "users", userId)
     await updateDoc(userDocRef, {
       menus: arrayUnion(menuId),
-    });
+    })
 
-    return menuId;
+    return menuId
   } catch (error) {
     throw new Error(error)
   }
@@ -161,116 +161,120 @@ export const addUserFavoriteMenu = async (menuId) => {
 export const getFood = async () => {
   try {
     const food = await getDocs(collection(db, "food"))
-    return food.docs.map((doc) => doc.data())
+    return food.docs
+      .map((doc) => doc.data())
+      .sort((a, b) => {
+        return a.name.localeCompare(b.name)
+      })
   } catch (error) {
     throw new Error(error)
   }
-};
+}
 
 export const getRecommendations = async () => {
   try {
-    const recommendations = await getDocs(collection(db, "recommendations"));
-    return recommendations.docs.map((doc) => doc.data());
+    const recommendations = await getDocs(collection(db, "recommendations"))
+    return recommendations.docs.map((doc) => doc.data())
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error)
   }
-};
+}
 export const getUserRecipes = async () => {
   try {
     // Obtener el ID del usuario actual
-    const userId = auth.currentUser.uid;
+    const userId = auth.currentUser.uid
 
     // Obtener el documento del usuario actual
-    const userDocRef = doc(db, "users", userId);
-    const userDoc = await getDoc(userDocRef);
+    const userDocRef = doc(db, "users", userId)
+    const userDoc = await getDoc(userDocRef)
 
     // Obtener los IDs de las recetas del usuario actual
-    const recipeIds = userDoc.data().recipes;
+    const recipeIds = userDoc.data().recipes
 
     // Obtener las recetas del usuario actual
-    const recipes = [];
+    const recipes = []
     for (const recipeId of recipeIds) {
-      const recipeDocRef = doc(db, "recipes", recipeId);
-      const recipeDoc = await getDoc(recipeDocRef);
-      recipes.push(recipeDoc.data());
+      const recipeDocRef = doc(db, "recipes", recipeId)
+      const recipeDoc = await getDoc(recipeDocRef)
+      recipes.push(recipeDoc.data())
     }
-    return recipes;
+    return recipes
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error)
   }
-};
+}
 
 export const getUserMenus = async () => {
   try {
     // Obtener el ID del usuario actual
-    const userId = auth.currentUser.uid;
+    const userId = auth.currentUser.uid
 
     // Obtener el documento del usuario actual
-    const userDocRef = doc(db, "users", userId);
-    const userDoc = await getDoc(userDocRef);
+    const userDocRef = doc(db, "users", userId)
+    const userDoc = await getDoc(userDocRef)
 
     // Obtener los IDs de las recetas del usuario actual
-    const menuIds = userDoc.data().menus;
+    const menuIds = userDoc.data().menus
 
     // Obtener las recetas del usuario actual
-    const menus = [];
+    const menus = []
     for (const menuId of menuIds) {
-      const menuDocRef = doc(db, "menus", menuId);
-      const menuDoc = await getDoc(menuDocRef);
-      menus.push(menuDoc.data());
+      const menuDocRef = doc(db, "menus", menuId)
+      const menuDoc = await getDoc(menuDocRef)
+      menus.push(menuDoc.data())
     }
-    return menus;
+    return menus
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error)
   }
-};
+}
 
 export const getUserFavoriteRecipes = async () => {
   try {
     // Obtener el ID del usuario actual
-    const userId = auth.currentUser.uid;
+    const userId = auth.currentUser.uid
 
     // Obtener el documento del usuario actual
-    const userDocRef = doc(db, "users", userId);
-    const userDoc = await getDoc(userDocRef);
+    const userDocRef = doc(db, "users", userId)
+    const userDoc = await getDoc(userDocRef)
 
     // Obtener los IDs de las recetas del usuario actual
-    const recipeIds = userDoc.data().favoriteRecipes;
+    const recipeIds = userDoc.data().favoriteRecipes
 
     // Obtener las recetas del usuario actual
-    const recipes = [];
+    const recipes = []
     for (const recipeId of recipeIds) {
-      const recipeDocRef = doc(db, "recipes", recipeId);
-      const recipeDoc = await getDoc(recipeDocRef);
-      recipes.push(recipeDoc.data());
+      const recipeDocRef = doc(db, "recipes", recipeId)
+      const recipeDoc = await getDoc(recipeDocRef)
+      recipes.push(recipeDoc.data())
     }
-    return recipes;
+    return recipes
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error)
   }
-};
+}
 
 export const getUserFavoriteMenus = async () => {
   try {
     // Obtener el ID del usuario actual
-    const userId = auth.currentUser.uid;
+    const userId = auth.currentUser.uid
 
     // Obtener el documento del usuario actual
-    const userDocRef = doc(db, "users", userId);
-    const userDoc = await getDoc(userDocRef);
+    const userDocRef = doc(db, "users", userId)
+    const userDoc = await getDoc(userDocRef)
 
     // Obtener los IDs de las recetas del usuario actual
-    const menuIds = userDoc.data().favoriteMenus;
+    const menuIds = userDoc.data().favoriteMenus
 
     // Obtener las recetas del usuario actual
-    const menus = [];
+    const menus = []
     for (const menuId of menuIds) {
-      const menuDocRef = doc(db, "menus", menuId);
-      const menuDoc = await getDoc(menuDocRef);
-      menus.push(menuDoc.data());
+      const menuDocRef = doc(db, "menus", menuId)
+      const menuDoc = await getDoc(menuDocRef)
+      menus.push(menuDoc.data())
     }
-    return menus;
+    return menus
   } catch (error) {
-    throw new Error(error);
+    throw new Error(error)
   }
-};
+}

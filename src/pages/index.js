@@ -93,7 +93,7 @@ function FoodList({ classification, foodList, selectedFood, setSelectedFood }) {
         <Text>{description}</Text>
       </SectionHeader>
 
-      <div className="flex gap-2 justify-between flex-wrap">
+      <div className="flex gap-2 flex-wrap">
         {foodList.map((currentFood) => (
           <button
             key={currentFood.id}
@@ -128,8 +128,17 @@ export default function Home({ categorizedFood }) {
       }, 1000)
     })
 
-    sendMessage(selectedFood);
+    sendMessage(selectedFood, selectedFoodTime.name)
+      .then((response) => {
+        console.log({ res: JSON.parse(response) })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
+
+  const isRecipeGenerationDisabled =
+    isGeneratingRecipe || selectedFood.length === 0
 
   const handleSelectFoodTime = (foodTime) => {
     console.log({ foodTime })
@@ -145,16 +154,32 @@ export default function Home({ categorizedFood }) {
             Disfruta de comidas personalizadas con ingredientes en casa.
             Selecciónalos, elige el tipo y deléitate.
           </Text>
+
+          <p
+            className={`text-xs ${
+              selectedFood.length > 0 ? "text-primary" : "text-secondary"
+            }`}
+          >
+            <b>{`${selectedFood.length} `}</b>
+            alimentos seleccionados.
+          </p>
         </SectionHeader>
 
         <button
           onClick={() => generateRecipe(selectedFood)}
-          className={`flex items-center justify-center mx-auto hover:rotate-12 transition-all ${
-            isGeneratingRecipe ? "text-secondary/50" : "text-primary"
+          className={`flex flex-col gap-1 items-center justify-center mx-auto  ${
+            isRecipeGenerationDisabled ? "text-secondary/50" : "text-primary"
           }`}
-          disabled={isGeneratingRecipe}
+          disabled={isRecipeGenerationDisabled}
         >
-          <FoodGeneratorIcon size={96} />
+          <div
+            className={`transition-all ${
+              !isRecipeGenerationDisabled && "hover:rotate-12"
+            }`}
+          >
+            <FoodGeneratorIcon size={96} />
+          </div>
+          <span className="text-sm font-semibold">Generar</span>
         </button>
 
         <Tabs>
