@@ -93,7 +93,7 @@ function FoodList({ classification, foodList, selectedFood, setSelectedFood }) {
         <Text>{description}</Text>
       </SectionHeader>
 
-      <div className="flex gap-2 justify-between flex-wrap">
+      <div className="flex gap-2 flex-wrap">
         {foodList.map((currentFood) => (
           <button
             key={currentFood.id}
@@ -128,7 +128,13 @@ export default function Home({ categorizedFood }) {
       }, 1000)
     })
 
-    sendMessage(selectedFood);
+    sendMessage(selectedFood, selectedFoodTime.name)
+      .then((response) => {
+        console.log({ res: JSON.parse(response) })
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const handleSelectFoodTime = (foodTime) => {
