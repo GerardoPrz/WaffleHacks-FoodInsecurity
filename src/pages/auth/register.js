@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { register } from './api/firebase';
+import { register } from '../api/firebase';
 
 export default function RegisterForm() {
   const [email, setEmail] = useState('');
