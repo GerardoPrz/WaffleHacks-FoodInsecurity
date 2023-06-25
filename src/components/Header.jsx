@@ -2,7 +2,8 @@ import Image from "next/image"
 import { BurgerMenuIcon } from "./Icons"
 import Link from "next/link"
 
-const COMPACT_LOGO_SIZE = 32
+const COMPACT_LOGO_WIDTH = 48
+const COMPACT_LOGO_HEIGHT = 24
 
 export function Header() {
   return (
@@ -16,9 +17,8 @@ export function Header() {
           <Image
             src="/logos/letters.png"
             alt="Nourish Logo"
-            width={COMPACT_LOGO_SIZE}
-            height={COMPACT_LOGO_SIZE}
-            className="aspect-square object-cover"
+            width={COMPACT_LOGO_WIDTH}
+            height={COMPACT_LOGO_HEIGHT}
           />
         </Link>
       </nav>
