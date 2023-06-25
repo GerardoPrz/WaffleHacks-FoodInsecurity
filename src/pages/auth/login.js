@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { login } from '../api/firebasee';
+import { login } from '../api/firebase';
 
 export default function LoginForm() {
   const [email, setEmail] = useState('');
