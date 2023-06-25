@@ -7,8 +7,6 @@ export function Tabs({ children }) {
 }
 
 export function Tab({ children, isSelected, onClick }) {
-  console.log({ isSelected })
-
   const classes = [
     "flex text-center py-2 cursor-pointer items-center justify-center py-1.5 px-2 w-full hover:bg-white duration-300 ease-in-out rounded-lg border-2",
     isSelected
