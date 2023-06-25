@@ -7,7 +7,7 @@ const COMPACT_LOGO_HEIGHT = 24
 
 export function Header() {
   return (
-    <header className="flex items-center justify-between py-3 px-4 gap-2 sticky top-0 bg-white drop-shadow-sm">
+    <header className="flex items-center justify-between py-3 px-4 gap-2 sticky top-0 bg-white drop-shadow-sm opacity-100 z-50">
       <button>
         <BurgerMenuIcon size={24} className="text-dark" />
       </button>
