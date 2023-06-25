@@ -47,7 +47,12 @@ export const register = async (email, password) => {
     // Crear un documento para el usuario en Firestore
     const userDocRef = doc(db, "users", userCredential.user.uid);
     const userData = {
-      email: userCredential.user.email,
+      id: userCredential.user.uid,
+      menus: [],
+      recipes: [],
+      favoriteRecipes: [],
+      favoriteMenus: [],
+      college: "",
       // Otros datos del usuario que quieras guardar en el documento
     };
     await setDoc(userDocRef, userData);
