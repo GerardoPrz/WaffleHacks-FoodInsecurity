@@ -11,6 +11,7 @@ import {
 import { getFood } from "./api/firebase"
 import { useState } from "react"
 import { FoodGeneratorIcon } from "@/components/Icons"
+import { sendMessage } from "./api/chatGPT"
 
 const FOOD_TYPES = {
   good: {
@@ -126,6 +127,8 @@ export default function Home({ categorizedFood }) {
         resolve()
       }, 1000)
     })
+
+    sendMessage(selectedFood);
   }
 
   const handleSelectFoodTime = (foodTime) => {
