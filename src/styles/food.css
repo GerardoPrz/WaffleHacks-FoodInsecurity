@@ -1,0 +1,25 @@
+.food {
+  border-width: 2px;
+
+}
+
+.food--not-selected {
+  stroke-opacity: 0.1;
+}
+
+.good-food {
+    background-color: #28BC63;
+}
+
+.good-food--border {
+    border: 1px solid #28BC63;
+}
+
+.bad-food {
+    background-color: #DC2A2A;
+}
+
+.bad-food--border {
+    border: 1px solid #DC2A2A;
+}
+

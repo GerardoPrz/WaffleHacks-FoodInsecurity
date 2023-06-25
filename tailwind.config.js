@@ -18,6 +18,20 @@ module.exports = {
         separator: "#3C3C43",
       },
     },
+    safelist: [
+      {
+        pattern: /bg-.*/,
+        variants: ["hover"],
+      },
+      {
+        pattern: /text-.*/,
+        variants: ["hover"],
+      },
+      {
+        pattern: /border-.*/,
+        variants: ["hover"],
+      },
+    ],
   },
   plugins: [],
 }

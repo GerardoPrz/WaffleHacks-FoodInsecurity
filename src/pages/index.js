@@ -9,53 +9,12 @@ import {
   Tabs,
 } from "@/components"
 import { getFood } from "./api/firebase"
-import { useState } from "react"
+import { useEffect } from "react"
 import { FoodGeneratorIcon } from "@/components/Icons"
-import { sendMessage } from "./api/chatGPT"
-
-const FOOD_TYPES = {
-  good: {
-    order: 0,
-    name: "good",
-    title: "Consumo diario",
-    description:
-      "Disfruta de una dieta balanceada, con alimentos de consumo diario.",
-    color: "#28BC63",
-  },
-  moderate: {
-    order: 1,
-    name: "moderate",
-    title: "Consumo moderado",
-    description: "Disfruta estos alimentos de 2 - 3 veces por semana",
-    color: "#F0A535",
-  },
-  bad: {
-    order: 2,
-    name: "bad",
-    title: "Consumo limitado",
-    description:
-      "Recomendamos que disfrutes de estos alimentos 1 vez por semana.",
-    color: "#DC2A2A",
-  },
-}
-
-const FOOD_TIMES = {
-  breakfast: {
-    order: 0,
-    name: "breakfast",
-    title: "Desayuno",
-  },
-  lunch: {
-    order: 1,
-    name: "lunch",
-    title: "Comida",
-  },
-  dinner: {
-    order: 2,
-    name: "dinner",
-    title: "Cena",
-  },
-}
+import { useRecipeGeneration } from "@/hooks/useRecipeGeneration"
+import { useModal } from "@/hooks/useModal"
+import { FOOD_TIMES, FOOD_TYPES } from "@/constants"
+import { RecipeDetailsModal } from "@/components/Modal"
 
 function FoodList({ classification, foodList, selectedFood, setSelectedFood }) {
   const { title, description, color } = FOOD_TYPES[classification]
@@ -113,40 +72,47 @@ function FoodList({ classification, foodList, selectedFood, setSelectedFood }) {
 }
 
 export default function Home({ categorizedFood }) {
-  const [selectedFood, setSelectedFood] = useState([])
-  const [selectedFoodTime, setSelectedFoodTime] = useState(FOOD_TIMES.breakfast)
+  const { isOpen, openModal, closeModal } = useModal()
 
-  const [isGeneratingRecipe, setIsGeneratingRecipe] = useState(false)
+  const {
+    selectedFood,
+    setSelectedFood,
+    selectedFoodTime,
+    isRecipeGenerationDisabled,
+    generateRecipe,
+    handleSelectFoodTime,
+    generatedRecipe,
+    isLoading,
+    isError,
+  } = useRecipeGeneration()
 
-  const generateRecipe = (selectedFood) => {
-    console.log({ selectedFood })
-    new Promise((resolve) => {
-      setIsGeneratingRecipe(true)
-      setTimeout(() => {
-        setIsGeneratingRecipe(false)
-        resolve()
-      }, 1000)
+  useEffect(() => {
+    if (isError) {
+      closeModal()
+    }
+  }, [isError, closeModal])
+
+  useEffect(() => {
+    console.log({ selectedFoodTime })
+  }, [selectedFoodTime])
+
+  const handleRecipeGeneration = () => {
+    openModal()
+
+    generateRecipe({
+      selectedFood,
+      foodTime: selectedFoodTime.name,
     })
-
-    sendMessage(selectedFood, selectedFoodTime.name)
-      .then((response) => {
-        console.log({ res: JSON.parse(response) })
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
-  const isRecipeGenerationDisabled =
-    isGeneratingRecipe || selectedFood.length === 0
-
-  const handleSelectFoodTime = (foodTime) => {
-    console.log({ foodTime })
-    setSelectedFoodTime(foodTime)
   }
 
   return (
     <>
+      <RecipeDetailsModal
+        recipe={generatedRecipe}
+        isOpen={isOpen}
+        closeModal={closeModal}
+        isLoading={isLoading}
+      />
       <section className="flex flex-col gap-12">
         <SectionHeader>
           <Title>Generador de recetas</Title>
@@ -166,7 +132,7 @@ export default function Home({ categorizedFood }) {
         </SectionHeader>
 
         <button
-          onClick={() => generateRecipe(selectedFood)}
+          onClick={handleRecipeGeneration}
           className={`flex flex-col gap-1 items-center justify-center mx-auto  ${
             isRecipeGenerationDisabled ? "text-secondary/50" : "text-primary"
           }`}
@@ -186,7 +152,9 @@ export default function Home({ categorizedFood }) {
           {Object.values(FOOD_TIMES).map(({ name, title }) => (
             <Tab
               key={name}
-              onClick={() => handleSelectFoodTime(FOOD_TIMES[name])}
+              onClick={() => {
+                handleSelectFoodTime(FOOD_TIMES[name])
+              }}
               isSelected={selectedFoodTime.name.localeCompare(name) === 0}
             >
               {title}
@@ -236,8 +204,6 @@ export const getServerSideProps = async () => {
       },
     ),
   )
-
-  console.log({ food, orderedCategorizedFood })
 
   return { props: { food, categorizedFood: orderedCategorizedFood } }
 }

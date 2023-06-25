@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const sendMessage = async (selectedFood, foodTime) => {
   const EXAMPLE_RESPONSE = {
-    name: "Pan de Amaranto y Avena",
+    name: "Pan de Amaranto y Avena 🍞",
     description:
       "Delicioso pan de amaranto y avena para un desayuno saludable.",
     ingredients: [
@@ -22,7 +22,7 @@ export const sendMessage = async (selectedFood, foodTime) => {
   const message = `Con los siguientes ingredientes: ${selectedFood
     .map((food) => food.name)
     .join(", ")} 
-    Dime qué puedo cocinar. Debes especificar la cantidad exacta de ingredientes (ejemplo:
+    Dime qué puedo cocinar. El título debe contener un emoji al final. Debes especificar la cantidad exacta de ingredientes (ejemplo:
         ["1 taza de ingrediente1", "2 pieza de ingrediente 2"]) en una 
     sección y en la otra las instrucciones claras; devuélvemelos en un json. Los 
     ingredientes en un array y las instrucciones en otro array, las instrucciones dámelas 
@@ -45,7 +45,13 @@ export const sendMessage = async (selectedFood, foodTime) => {
   return await axios
     .post(url, data, { headers: headers })
     .then((response) => {
-      return response.data.choices[0].message.content
+      const recipe = JSON.parse(response.data.choices[0].message.content)
+
+      return {
+        ...recipe,
+        type: foodTime,
+        foodList: selectedFood,
+      }
     })
     .catch((error) => {
       console.log(error)
