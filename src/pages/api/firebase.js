@@ -1,38 +1,56 @@
 import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+} from "firebase/auth";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyC2ps1m1koNXDLcElKtg0LN-bl3KvWNlLo",
-    authDomain: "foodsecurity-d94c7.firebaseapp.com",
-    projectId: "foodsecurity-d94c7",
-    storageBucket: "foodsecurity-d94c7.appspot.com",
-    messagingSenderId: "1054379889926",
-    appId: "1:1054379889926:web:e5ed6595711abf061b3a87"
-  };
-  
-  // Initialize Firebase
+  apiKey: "AIzaSyC2ps1m1koNXDLcElKtg0LN-bl3KvWNlLo",
+  authDomain: "foodsecurity-d94c7.firebaseapp.com",
+  projectId: "foodsecurity-d94c7",
+  storageBucket: "foodsecurity-d94c7.appspot.com",
+  messagingSenderId: "1054379889926",
+  appId: "1:1054379889926:web:e5ed6595711abf061b3a87",
+};
+
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
-export const login = async () => {
+const auth = getAuth(app);
 
-    try {//email and password
-        await firebase.auth().signInWithEmailAndPassword(email, password);
-    } catch (error) {
-        throw new Error(error);
-    }
-  };
+export const login = async (email, password) => {
+  try {
+    //email and password
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    console.log(result);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
-export const register = async () => {
-    try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
-    } catch (error) {
-      throw new Error(error);
-    }
-  };
+export const register = async (email, password) => {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const resetPassword = async (email) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+  } catch (error) {
+    throw new Error(error);
+  }
+};
 
 export const logout = async () => {
-    try {
-      await firebase.auth().signOut();
-    } catch (error) {
-        throw new Error(error);
-    }
+  try {
+    await signOut(auth);
+  } catch (error) {
+    throw new Error(error);
+  }
 };
