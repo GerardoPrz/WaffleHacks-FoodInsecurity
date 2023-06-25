@@ -31,7 +31,7 @@ export default function Home() {
 
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
     }
 
     const data = {

@@ -12,7 +12,6 @@ import { LoadingScreen } from "./Loading"
 export function ModalHeader({ children }) {
   return (
     <Dialog.Title
-      as="h3"
       className="border-b-2 pb-3 text-lg font-medium leading-6 text-gray-900 flex items-center justify-between"
     >
       {children}
