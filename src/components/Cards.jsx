@@ -17,6 +17,8 @@ export function FoodCard({
   const { size: cardSize, iconSize } = FOOD_CARD_PROPS[size]
   const { name, icon: foodIcon } = food
 
+  console.log({ name, foodIcon })
+
   const classes = [
     "cursor-pointer flex flex-col gap-2 p-3 rounded-lg border-2 justify-center items-center",
     isSelected ? "border-primary" : "border-text/10",
@@ -24,7 +26,7 @@ export function FoodCard({
     cardSize,
   ].join(" ")
 
-  const icon = foodIcon ?? DEFAULT_ICON
+  const icon = foodIcon || DEFAULT_ICON
 
   const iconProps = {
     src: `/food/${icon}`,
