@@ -7,12 +7,13 @@ import {
   signOut,
 } from "firebase/auth";
 
-import { 
-    getFirestore, 
-    doc, 
-    setDoc, 
-    getDocs,
-    collection } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDocs,
+  collection,
+} from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: "AIzaSyC2ps1m1koNXDLcElKtg0LN-bl3KvWNlLo",
@@ -153,6 +154,16 @@ export const getFood = async () => {
   try {
     const food = await getDocs(collection(db, "food"));
     return food.docs.map((doc) => doc.data());
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getRecommendations = async () => {
+  try {
+    const recommendations = await getDocs(collection(db, "recommendations"));
+    console.log(recommendations.docs.map((doc) => doc.data()));
+    return recommendations.docs.map((doc) => doc.data());
   } catch (error) {
     throw new Error(error);
   }
