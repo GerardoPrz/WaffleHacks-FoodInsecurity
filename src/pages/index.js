@@ -8,13 +8,14 @@ import {
   Tab,
   Tabs,
 } from "@/components"
-import { getFood } from "./api/firebase"
+import { getFood, getRecommendations } from "./api/firebase"
 import { useEffect } from "react"
 import { FoodGeneratorIcon } from "@/components/Icons"
 import { useRecipeGeneration } from "@/hooks/useRecipeGeneration"
 import { useModal } from "@/hooks/useModal"
 import { FOOD_TIMES, FOOD_TYPES } from "@/constants"
 import { RecipeDetailsModal } from "@/components/Modal"
+import { useQuery } from "react-query"
 
 function FoodList({ classification, foodList, selectedFood, setSelectedFood }) {
   const { title, description, color } = FOOD_TYPES[classification]
@@ -73,6 +74,15 @@ function FoodList({ classification, foodList, selectedFood, setSelectedFood }) {
 
 export default function Home({ categorizedFood }) {
   const { isOpen, openModal, closeModal } = useModal()
+
+  // Preload recommendations
+  useQuery({
+    queryKey: ["recommendations"],
+    queryFn: getRecommendations,
+    onSuccess: (data) => {
+      console.log({ data })
+    }
+  })
 
   const {
     selectedFood,

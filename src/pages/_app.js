@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }) {
           className={`bg-light min-h-screen container w-full max-w-sm flex flex-col ${openSans.className}`}
         >
           <Header />
-          <main className="flex flex-col py-6 px-4 gap-5">
+          <main className="flex flex-col py-6 px-4 gap-5 relative">
             <Component {...pageProps} />
           </main>
           <MobileNavbar />
