@@ -175,7 +175,6 @@ export const getRecommendations = async () => {
     throw new Error(error);
   }
 };
-
 export const getUserRecipes = async () => {
   try {
     // Obtener el ID del usuario actual
