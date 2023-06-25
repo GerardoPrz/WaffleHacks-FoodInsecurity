@@ -14,7 +14,11 @@ const getIconSizeProps = (size) => {
 
 export function HomeIcon({ size }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none">
+    <svg
+      {...getIconSizeProps(size)}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <mask
         {...getIconSizeProps(size)}
         id="a"
@@ -36,7 +40,11 @@ export function HomeIcon({ size }) {
 
 export function MenuIcon({ size }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none">
+    <svg
+    {...getIconSizeProps(size)}
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+    >
       <mask
         {...getIconSizeProps(size)}
         id="a"
@@ -58,7 +66,11 @@ export function MenuIcon({ size }) {
 
 export function CafeteriaIcon({ size }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="none">
+    <svg
+      {...getIconSizeProps(size)}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <mask
         {...getIconSizeProps(size)}
         id="a"
@@ -107,7 +119,11 @@ export function EducationIcon({ size }) {
 
 export function FoodGeneratorIcon({ size }) {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="none">
+    <svg
+      {...getIconSizeProps(size)}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <mask
         id="a"
         {...getIconSizeProps(size)}
