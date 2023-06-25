@@ -11,6 +11,10 @@ import {
   getFirestore,
   doc,
   setDoc,
+  addDoc,
+  updateDoc,
+  arrayUnion,
+  getDoc,
   getDocs,
   collection,
 } from "firebase/firestore";
@@ -82,7 +86,7 @@ export const logout = async () => {
   }
 };
 
-export const addRecipes = async (recipe) => {
+export const addUserRecipe = async (recipe) => {
   try {
     // Crear la receta en la colección "recipes"
     const recipeRef = await addDoc(collection(db, "recipes"), recipe);
@@ -96,12 +100,14 @@ export const addRecipes = async (recipe) => {
     await updateDoc(userDocRef, {
       recipes: arrayUnion(recipeId),
     });
+
+    return recipeId;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-export const addMenu = async (menu) => {
+export const addUserMenu = async (menu) => {
   try {
     // Crear el menú en la colección "menus"
     const menuRef = await addDoc(collection(db, "menus"), menu);
@@ -115,12 +121,14 @@ export const addMenu = async (menu) => {
     await updateDoc(userDocRef, {
       menus: arrayUnion(menuId),
     });
+
+    return menuId;
   } catch (error) {
     throw new Error(error);
   }
 };
 
-export const addFavoriteRecipe = async (recipeId) => {
+export const addUserFavoriteRecipe = async (recipeId) => {
   try {
     // Obtener el ID del usuario actual
     const userId = auth.currentUser.uid;
@@ -135,7 +143,7 @@ export const addFavoriteRecipe = async (recipeId) => {
   }
 };
 
-export const addFavoriteMenu = async (menuId) => {
+export const addUserFavoriteMenu = async (menuId) => {
   try {
     // Obtener el ID del usuario actual
     const userId = auth.currentUser.uid;
@@ -162,8 +170,106 @@ export const getFood = async () => {
 export const getRecommendations = async () => {
   try {
     const recommendations = await getDocs(collection(db, "recommendations"));
-    console.log(recommendations.docs.map((doc) => doc.data()));
     return recommendations.docs.map((doc) => doc.data());
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+export const getUserRecipes = async () => {
+  try {
+    // Obtener el ID del usuario actual
+    const userId = auth.currentUser.uid;
+
+    // Obtener el documento del usuario actual
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+
+    // Obtener los IDs de las recetas del usuario actual
+    const recipeIds = userDoc.data().recipes;
+
+    // Obtener las recetas del usuario actual
+    const recipes = [];
+    for (const recipeId of recipeIds) {
+      const recipeDocRef = doc(db, "recipes", recipeId);
+      const recipeDoc = await getDoc(recipeDocRef);
+      recipes.push(recipeDoc.data());
+    }
+    return recipes;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getUserMenus = async () => {
+  try {
+    // Obtener el ID del usuario actual
+    const userId = auth.currentUser.uid;
+
+    // Obtener el documento del usuario actual
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+
+    // Obtener los IDs de las recetas del usuario actual
+    const menuIds = userDoc.data().menus;
+
+    // Obtener las recetas del usuario actual
+    const menus = [];
+    for (const menuId of menuIds) {
+      const menuDocRef = doc(db, "menus", menuId);
+      const menuDoc = await getDoc(menuDocRef);
+      menus.push(menuDoc.data());
+    }
+    return menus;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getUserFavoriteRecipes = async () => {
+  try {
+    // Obtener el ID del usuario actual
+    const userId = auth.currentUser.uid;
+
+    // Obtener el documento del usuario actual
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+
+    // Obtener los IDs de las recetas del usuario actual
+    const recipeIds = userDoc.data().favoriteRecipes;
+
+    // Obtener las recetas del usuario actual
+    const recipes = [];
+    for (const recipeId of recipeIds) {
+      const recipeDocRef = doc(db, "recipes", recipeId);
+      const recipeDoc = await getDoc(recipeDocRef);
+      recipes.push(recipeDoc.data());
+    }
+    return recipes;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
+export const getUserFavoriteMenus = async () => {
+  try {
+    // Obtener el ID del usuario actual
+    const userId = auth.currentUser.uid;
+
+    // Obtener el documento del usuario actual
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+
+    // Obtener los IDs de las recetas del usuario actual
+    const menuIds = userDoc.data().favoriteMenus;
+
+    // Obtener las recetas del usuario actual
+    const menus = [];
+    for (const menuId of menuIds) {
+      const menuDocRef = doc(db, "menus", menuId);
+      const menuDoc = await getDoc(menuDocRef);
+      menus.push(menuDoc.data());
+    }
+    return menus;
   } catch (error) {
     throw new Error(error);
   }
