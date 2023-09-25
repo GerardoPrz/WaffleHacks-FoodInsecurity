@@ -1,7 +1,7 @@
 export function Title({children}) {
-  return <h1 className='text-xl font-semibold'>{children}</h1>;
+  return <p className='text-xl font-semibold'>{children}</p>;
 }
 
 export function Subtitle({children}) {
-  return <h2 className='text-lg font-semibold'>{children}</h2>;
+  return <p className='text-lg font-semibold'>{children}</p>;
 }
